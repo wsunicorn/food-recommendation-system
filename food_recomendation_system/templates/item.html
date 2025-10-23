@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ item.title }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="container">
+    <a href="/">← Back</a>
+    <div class="item-detail">
+        <div class="image-wrap">
+            <img src="{{ item.link_image_food }}" alt="{{ item.title }}">
+        </div>
+        <div class="meta">
+            <h1>{{ item.title }}</h1>
+            <p>{{ item.description }}</p>
+            <p><strong>Rating:</strong> {{ item.rating }}</p>
+            <p><a href="{{ item.link_food }}" target="_blank">Recipe link</a></p>
+        </div>
+    </div>
+
+    <h2>Recommended similar items</h2>
+    <div class="grid">
+        {% for r in recs %}
+        <div class="card">
+            <a href="/item/{{ r.item_id }}">
+                <img src="{{ r.image }}" alt="{{ r.title }}">
+                <h4>{{ r.title }}</h4>
+                <small>score: {{ "%.3f"|format(r.score) }}</small>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
