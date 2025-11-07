@@ -33,7 +33,8 @@ class ContentBasedRecommender:
             texts = [f"{t} {d}" for t, d in zip(titles, descriptions)]
 
         if self.method == 'tfidf':
-            self.vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)
+            # tuned TF-IDF: capture bigrams, ignore very rare tokens, increase features
+            self.vectorizer = TfidfVectorizer(stop_words='english', max_features=10000, ngram_range=(1,2), min_df=2)
             self.embeddings = self.vectorizer.fit_transform(texts)
         else:
             if SentenceTransformer is None:
