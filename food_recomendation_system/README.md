@@ -1,18 +1,18 @@
-# 🍽️ Food Recommendation System - HYBRID (Content-Based + Collaborative Filtering)
+# 🍽️ Hệ Thống Gợi Ý Món Ăn - HYBRID (Lọc Dựa Trên Nội Dung + Lọc Cộng Tác)
 
 ## 📋 Tổng quan
 
 Hệ thống gợi ý món ăn sử dụng **Hybrid Recommendation** kết hợp:
 
-- ✅ **Content-Based Filtering**: Gợi ý dựa trên độ tương đồng nội dung (TF-IDF)
-- ✅ **Collaborative Filtering**: Gợi ý cá nhân hóa dựa trên lịch sử người dùng và hành vi của users tương tự
-- ✅ **User Authentication**: Đăng nhập để nhận personalized recommendations
+- ✅ **Lọc Dựa Trên Nội Dung (Content-Based Filtering)**: Gợi ý dựa trên độ tương đồng nội dung (TF-IDF)
+- ✅ **Lọc Cộng Tác (Collaborative Filtering)**: Gợi ý cá nhân hóa dựa trên lịch sử người dùng và hành vi của người dùng tương tự
+- ✅ **Xác Thực Người Dùng**: Đăng nhập để nhận gợi ý cá nhân hóa
 
 ---
 
-## 🚀 Quick Start - Test ngay!
+## 🚀 Bắt Đầu Nhanh - Test ngay!
 
-### Bước 1: Cài đặt dependencies
+### Bước 1: Cài đặt thư viện
 
 ```bash
 python -m venv .venv
@@ -20,79 +20,79 @@ python -m venv .venv
 pip install -r "food_recomendation_system\requirements.txt"
 ```
 
-### Bước 2: Start server
+### Bước 2: Khởi động server
 
 ```bash
 cd "d:\StudyDocument\Recomendation System\Project"
 python app.py
 ```
 
-### Bước 3: Test với nhiều users
+### Bước 3: Kiểm tra với nhiều người dùng
 
-1. Mở browser: `http://127.0.0.1:5000`
-2. Login với **User 1**: Username `1`, Password `9999`
-3. Click vào một món ăn → ghi nhớ recommendations
-4. **Logout** và login với **User 2**: Username `2`
-5. Click vào CÙNG món ăn đó → **recommendations KHÁC HOÀN TOÀN!**
+1. Mở trình duyệt: `http://127.0.0.1:5000`
+2. Đăng nhập với **Người dùng 1**: Tên đăng nhập `1`, Mật khẩu `9999`
+3. Nhấp vào một món ăn → ghi nhớ các gợi ý
+4. **Đăng xuất** và đăng nhập với **Người dùng 2**: Tên đăng nhập `2`
+5. Nhấp vào CÙNG món ăn đó → **các gợi ý HOÀN TOÀN KHÁC NHAU!**
 
 ### ✅ Những gì đã thay đổi:
 
 **Trước đây:**
 
-- ❌ Không có login
-- ❌ Mọi người thấy recommendations giống nhau
-- ❌ Chỉ dùng Content-Based (TF-IDF)
-- ❌ Không personalized
+- ❌ Không có đăng nhập
+- ❌ Mọi người thấy gợi ý giống nhau
+- ❌ Chỉ dùng Lọc Dựa Trên Nội Dung (TF-IDF)
+- ❌ Không cá nhân hóa
 
 **Bây giờ:**
 
-- ✅ Hệ thống login với User ID từ dataset
-- ✅ Mỗi user nhận recommendations KHÁC NHAU
-- ✅ Kết hợp Content-Based + Collaborative Filtering
-- ✅ **TRULY HYBRID SYSTEM** - Test verified 0% overlap!
+- ✅ Hệ thống đăng nhập với ID người dùng từ tập dữ liệu
+- ✅ Mỗi người dùng nhận gợi ý KHÁC NHAU
+- ✅ Kết hợp Lọc Nội Dung + Lọc Cộng Tác
+- ✅ **HỆ THỐNG HYBRID THỰC SỰ** - Kiểm tra xác nhận 0% trùng lặp!
 
 ---
 
 ## 🎯 Tính năng chính
 
-### 1. **Hệ thống Authentication**
+### 1. **Hệ thống Xác Thực**
 
-- Mỗi user trong dataset có thể đăng nhập với:
-  - **Username**: User ID từ dataset (vd: `416`, `1470`, `88`, `1`, `2`, `3`)
-  - **Password**: `9999` (giống nhau cho tất cả users để demo)
-- Flask session management để theo dõi user hiện tại
-- Logout an toàn
-- Valid users: 2323 user IDs từ dataset
+- Mỗi người dùng trong tập dữ liệu có thể đăng nhập với:
+  - **Tên đăng nhập**: ID người dùng từ tập dữ liệu (vd: `416`, `1470`, `88`, `1`, `2`, `3`)
+  - **Mật khẩu**: `9999` (giống nhau cho tất cả người dùng để demo)
+- Quản lý phiên Flask để theo dõi người dùng hiện tại
+- Đăng xuất an toàn
+- Người dùng hợp lệ: 2323 ID người dùng từ tập dữ liệu
 
-### 2. **Content-Based Filtering**
+### 2. **Lọc Dựa Trên Nội Dung**
 
-- Sử dụng TF-IDF vectorization trên title + description
-- Tính cosine similarity giữa các món ăn
+- Sử dụng TF-IDF vectorization trên tiêu đề + mô tả
+- Tính độ tương đồng cosine giữa các món ăn
 - Gợi ý món ăn có nội dung tương tự
-- Hỗ trợ SBERT embeddings (optional)
+- Hỗ trợ SBERT embeddings (tùy chọn)
 
-### 3. **Collaborative Filtering (USER-BASED)**
+### 3. **Lọc Cộng Tác (DỰA TRÊN NGƯỜI DÙNG)**
 
-- **User-based CF**: Tìm users tương tự → gợi ý món họ thích
-- Build user-item rating matrix (2323 users × 2838 items)
-- Tính user similarity bằng cosine similarity
-- Dự đoán rating cho items chưa thử bằng weighted average từ similar users (k=20)
-- **Personalized cho từng user** - mỗi người nhận recommendations khác nhau!
+- **Lọc cộng tác dựa trên người dùng**: Tìm người dùng tương tự → gợi ý món họ thích
+- Xây dựng ma trận đánh giá người dùng-món ăn (2323 người dùng × 2838 món)
+- Tính độ tương đồng người dùng bằng độ tương đồng cosine
+- Dự đoán đánh giá cho món chưa thử bằng trung bình có trọng số từ người dùng tương tự (k=20)
+- **Cá nhân hóa cho từng người dùng** - mỗi người nhận gợi ý khác nhau!
 
-### 4. **Hybrid Approach**
+### 4. **Phương Pháp Hybrid**
 
-- Kết hợp CB và CF scores với weighted average
-- Alpha parameter điều chỉnh tỷ lệ: `hybrid_score = α × CB + (1-α) × CF` (α=0.6)
-- Normalize scores bằng min-max normalization
-- Optional: boost bằng popularity
+- Kết hợp điểm CB và CF với trung bình có trọng số
+- Tham số Alpha điều chỉnh tỷ lệ: `hybrid_score = α × CB + (1-α) × CF` (α=0.6)
+- Chuẩn hóa điểm bằng chuẩn hóa min-max
+- Tùy chọn: tăng cường bằng độ phổ biến
 
 ### 5. **Giao diện Web (Flask)**
 
-- Trang login với form authentication
-- Trang chính có sidebar danh mục, bộ lọc (category/sort/diversify) và phân trang
-- Trang chi tiết món hiển thị **personalized recommendations**
-- User info bar với nút logout
-- Responsive design
+- Trang đăng nhập với biểu mẫu xác thực
+- Trang chính có thanh bên danh mục, bộ lọc (danh mục/sắp xếp/đa dạng hóa) và phân trang
+- Trang chi tiết món hiển thị **gợi ý cá nhân hóa**
+- Thanh thông tin người dùng với nút đăng xuất
+- Thiết kế responsive
 
 ---
 
@@ -100,30 +100,30 @@ python app.py
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                     USER LOGIN                          │
-│              (UserID from dataset + PW: 9999)           │
+│                 ĐĂNG NHẬP NGƯỜI DÙNG                    │
+│            (ID từ tập dữ liệu + MK: 9999)               │
 └────────────────────┬────────────────────────────────────┘
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────┐
-│                  SESSION MANAGEMENT                      │
-│           Track current user_id in Flask session         │
+│                  QUẢN LÝ PHIÊN                           │
+│          Theo dõi user_id hiện tại trong phiên Flask    │
 └────────────────────┬────────────────────────────────────┘
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────┐
-│              RECOMMENDATION ENGINE                       │
+│                  BỘ MÁY GỢI Ý                            │
 │  ┌─────────────────────┐  ┌─────────────────────────┐  │
-│  │  Content-Based (CB) │  │ Collaborative Filt (CF) │  │
-│  │  - TF-IDF vectors   │  │ - User-item matrix      │  │
-│  │  - Cosine similarity│  │ - User similarity       │  │
-│  │  - Item features    │  │ - User-based prediction │  │
+│  │  Lọc Nội Dung (CB)  │  │  Lọc Cộng Tác (CF)      │  │
+│  │  - TF-IDF vectors   │  │ - Ma trận người-món     │  │
+│  │  - Độ tương đồng    │  │ - Độ tương đồng người   │  │
+│  │  - Đặc trưng món    │  │ - Dự đoán người dùng    │  │
 │  └──────────┬──────────┘  └───────────┬─────────────┘  │
 │             │                          │                 │
 │             └──────────┬───────────────┘                 │
 │                        ▼                                 │
 │               ┌─────────────────┐                        │
-│               │ HYBRID COMBINER │                        │
+│               │  KẾT HỢP HYBRID │                        │
 │               │   α·CB + (1-α)·CF│                        │
 │               └─────────────────┘                        │
 └─────────────────────────────────────────────────────────┘
@@ -131,88 +131,88 @@ python app.py
 
 ---
 
-## 🧪 Test Results - Collaborative Filtering đang hoạt động!
+## 🧪 Kết Quả Kiểm Tra - Lọc Cộng Tác đang hoạt động!
 
-### ✅ **Kết quả test personalization:**
+### ✅ **Kết quả kiểm tra cá nhân hóa:**
 
-Chạy test script:
+Chạy script kiểm tra:
 
 ```bash
 python "food_recomendation_system\tools\test_personalization.py"
 ```
 
-**Output:**
+**Kết quả:**
 
 ```
-User 1 vs User 2:
-  - Common items in top 10: 0/10
-  - Jaccard similarity: 0.00%
-  ✅ GOOD: Recommendations are PERSONALIZED
+Người dùng 1 vs Người dùng 2:
+  - Món chung trong top 10: 0/10
+  - Độ tương đồng Jaccard: 0.00%
+  ✅ TỐT: Gợi ý được CÁ NHÂN HÓA
 
-User 1 vs User 3:
-  - Common items in top 10: 0/10
-  - Jaccard similarity: 0.00%
-  ✅ GOOD: Recommendations are PERSONALIZED
+Người dùng 1 vs Người dùng 3:
+  - Món chung trong top 10: 0/10
+  - Độ tương đồng Jaccard: 0.00%
+  ✅ TỐT: Gợi ý được CÁ NHÂN HÓA
 
-User 2 vs User 3:
-  - Common items in top 10: 0/10
-  - Jaccard similarity: 0.00%
-  ✅ GOOD: Recommendations are PERSONALIZED
+Người dùng 2 vs Người dùng 3:
+  - Món chung trong top 10: 0/10
+  - Độ tương đồng Jaccard: 0.00%
+  ✅ TỐT: Gợi ý được CÁ NHÂN HÓA
 ```
 
-**Kết luận:** Mỗi user nhận được recommendations HOÀN TOÀN KHÁC NHAU dựa trên:
+**Kết luận:** Mỗi người dùng nhận được gợi ý HOÀN TOÀN KHÁC NHAU dựa trên:
 
-- Lịch sử rating của họ
-- Hành vi của users tương tự
-- Kết hợp với content similarity
+- Lịch sử đánh giá của họ
+- Hành vi của người dùng tương tự
+- Kết hợp với độ tương đồng nội dung
 
 ---
 
-## 📁 Cấu trúc repository
+## 📁 Cấu trúc dự án
 
-### Core Files:
+### Các File Chính:
 
 ```
 food_recomendation_system/
-├── app.py                      # Main Flask app với authentication
-├── data_loader.py              # Load CSV, clean text, infer categories
-├── content_based.py            # TF-IDF/SBERT content-based recommender
-├── collaborative.py            # User-based CF algorithms
-├── matrix_factorization.py     # Simple MF with SGD
-├── hybrid.py                   # Weighted hybrid combiner
+├── app.py                      # Ứng dụng Flask chính với xác thực
+├── data_loader.py              # Tải CSV, làm sạch text, suy luận danh mục
+├── content_based.py            # Bộ gợi ý dựa trên nội dung TF-IDF/SBERT
+├── collaborative.py            # Thuật toán lọc cộng tác dựa trên người dùng
+├── matrix_factorization.py     # Phân tích ma trận đơn giản với SGD
+├── hybrid.py                   # Kết hợp hybrid có trọng số
 ├── templates/
-│   ├── login.html             # Login page
-│   ├── index.html             # Main page với user info
-│   └── item.html              # Item details với personalized recs
+│   ├── login.html             # Trang đăng nhập
+│   ├── index.html             # Trang chính với thông tin người dùng
+│   └── item.html              # Chi tiết món với gợi ý cá nhân hóa
 ├── static/
-│   └── styles.css             # Basic stylesheet
+│   └── styles.css             # File stylesheet cơ bản
 └── tools/
-    ├── test_personalization.py # Test CF personalization
-    ├── evaluate.py             # Evaluation metrics
-    ├── check_cb.py             # Debug content-based
-    ├── check_recs.py           # Check recommendations
-    └── debug_eval.py           # Debug evaluation
+    ├── test_personalization.py # Kiểm tra cá nhân hóa CF
+    ├── evaluate.py             # Các chỉ số đánh giá
+    ├── check_cb.py             # Debug lọc nội dung
+    ├── check_recs.py           # Kiểm tra gợi ý
+    └── debug_eval.py           # Debug đánh giá
 
 data/
-└── Dataset_for_print.csv       # Main dataset (2323 users × 2838 items)
+└── Dataset_for_print.csv       # Tập dữ liệu chính (2323 người dùng × 2838 món)
 
-app.py (project root)            # Entry point: python app.py
-requirements.txt                 # Python dependencies
+app.py (thư mục gốc)             # Điểm vào: python app.py
+requirements.txt                 # Thư viện Python
 ```
 
-### Key Functions:
+### Các Hàm Chính:
 
 **`collaborative.py`:**
 
 ```python
 def build_user_item_matrix(df, user_col, item_col, rating_col)
-    # Build sparse user-item rating matrix
+    # Xây dựng ma trận đánh giá người dùng-món ăn thưa thớt
   
 def cosine_sim_matrix(mat)
-    # Compute cosine similarity between rows
+    # Tính độ tương đồng cosine giữa các hàng
   
 def predict_user_based(R, user_index, sim_matrix, k=5)
-    # Predict ratings using k-nearest neighbors
+    # Dự đoán đánh giá sử dụng k-láng giềng gần nhất
 ```
 
 **`app.py`:**
@@ -220,104 +220,104 @@ def predict_user_based(R, user_index, sim_matrix, k=5)
 ```python
 @app.route('/login', methods=['GET', 'POST'])
 def login()
-    # Authenticate user: check userID exists and password=9999
-    # Store user_id in Flask session
+    # Xác thực người dùng: kiểm tra userID tồn tại và password=9999
+    # Lưu user_id vào phiên Flask
   
 @app.route('/item/<int:item_id>')
 def item_page(item_id)
-    # Get current user from session
-    # Compute personalized CF scores for this user
-    # Compute CB scores based on item content
-    # Combine with hybrid approach
-    # Return personalized recommendations
+    # Lấy người dùng hiện tại từ phiên
+    # Tính điểm CF cá nhân hóa cho người dùng này
+    # Tính điểm CB dựa trên nội dung món
+    # Kết hợp với phương pháp hybrid
+    # Trả về gợi ý cá nhân hóa
 ```
 
 ---
 
-## 🎯 Endpoints & Routes
+## 🎯 Các Đầu Mối & Đường Dẫn
 
-### Public Routes:
+### Các Đường Dẫn Công Khai:
 
-- `GET /login` — Trang login form
-- `POST /login` — Xác thực user (username=userID, password=9999)
+- `GET /login` — Trang biểu mẫu đăng nhập
+- `POST /login` — Xác thực người dùng (tên đăng nhập=userID, mật khẩu=9999)
 
-### Protected Routes (require login):
+### Các Đường Dẫn Bảo Vệ (yêu cầu đăng nhập):
 
-- `GET /` — Trang index với sidebar danh mục, bộ lọc và phân trang
+- `GET /` — Trang chỉ mục với thanh bên danh mục, bộ lọc và phân trang
 - `GET /category/<name>` — Xem tất cả món trong danh mục (có phân trang)
-- `GET /item/<id>` — Trang chi tiết món với **personalized recommendations**
+- `GET /item/<id>` — Trang chi tiết món với **gợi ý cá nhân hóa**
 - `GET /search?q=<query>` — Tìm kiếm món ăn theo tên
-- `GET /recommend/content/<id>` — API JSON trả về gợi ý content-based
-- `GET /logout` — Đăng xuất và clear session
+- `GET /recommend/content/<id>` — API JSON trả về gợi ý dựa trên nội dung
+- `GET /logout` — Đăng xuất và xóa phiên
 
 ---
 
-## 📊 Technical Details
+## 📊 Chi Tiết Kỹ Thuật
 
-### User-Item Matrix:
+### Ma Trận Người Dùng-Món Ăn:
 
-- **Size**: 2323 users × 2838 items
-- **Sparsity**: ~99% sparse (most users rate very few items)
-- **Algorithm**: User-based CF with k=20 nearest neighbors
-- **Storage**: In-memory numpy array
+- **Kích thước**: 2323 người dùng × 2838 món
+- **Độ thưa**: ~99% thưa (hầu hết người dùng đánh giá rất ít món)
+- **Thuật toán**: Lọc cộng tác dựa trên người dùng với k=20 láng giềng gần nhất
+- **Lưu trữ**: Mảng numpy trong bộ nhớ
 
-### Similarity Computation:
+### Tính Toán Độ Tương Đồng:
 
-- **Method**: Cosine similarity
-- **Normalization**: L2 norm
-- **User similarity**: Computed on-the-fly per request
-- **Item similarity**: Pre-computed at startup
+- **Phương pháp**: Độ tương đồng cosine
+- **Chuẩn hóa**: Chuẩn L2
+- **Độ tương đồng người dùng**: Tính theo thời gian thực cho mỗi yêu cầu
+- **Độ tương đồng món**: Được tính trước khi khởi động
 
-### Hybrid Weighting:
+### Trọng Số Hybrid:
 
-- **Default α**: 0.6 (60% Content-Based, 40% Collaborative)
-- **Adjustable** via URL parameter: `?alpha=0.5`
-- **Min-max normalization** ensures fair combination
-- **Optional popularity boost**: `?pop_weight=0.1`
+- **α mặc định**: 0.6 (60% Dựa Trên Nội Dung, 40% Cộng Tác)
+- **Có thể điều chỉnh** qua tham số URL: `?alpha=0.5`
+- **Chuẩn hóa min-max** đảm bảo kết hợp công bằng
+- **Tăng cường độ phổ biến tùy chọn**: `?pop_weight=0.1`
 
-### Content-Based:
+### Dựa Trên Nội Dung:
 
-- **Method**: TF-IDF vectorization
-- **Features**: title + description
-- **Dimensions**: 10,000 features
+- **Phương pháp**: Vector hóa TF-IDF
+- **Đặc trưng**: tiêu đề + mô tả
+- **Số chiều**: 10,000 đặc trưng
 - **N-grams**: 1-2 (bigrams)
-- **Alternative**: SBERT embeddings (optional)
+- **Phương án thay thế**: Embeddings SBERT (tùy chọn)
 
 ---
 
-## 🔍 So sánh: Trước vs Sau
+## 🔍 So Sánh: Trước vs Sau
 
-### ❌ **Trước (Chỉ Content-Based):**
+### ❌ **Trước (Chễ Dựa Trên Nội Dung):**
 
-- Không có login system
-- Mọi người xem cùng 1 recommendations cho cùng 1 món
-- Chỉ dựa vào content similarity (TF-IDF)
-- Không personalized cho từng user
-- Collaborative filtering code có nhưng không được sử dụng
+- Không có hệ thống đăng nhập
+- Mọi người xem cùng một gợi ý cho cùng một món
+- Chỉ dựa vào độ tương đồng nội dung (TF-IDF)
+- Không cá nhân hóa cho từng người dùng
+- Mã lọc cộng tác có nhưng không được sử dụng
 
-### ✅ **Sau (Hybrid với CF):**
+### ✅ **Sau (Hybrid với Lọc Cộng Tác):**
 
-- ✅ Hệ thống login đầy đủ với session management
-- ✅ Mỗi user nhận personalized recommendations
-- ✅ Dựa trên lịch sử rating + hành vi users tương tự
-- ✅ Kết hợp content similarity + collaborative filtering
-- ✅ Truly hybrid approach - verified 0% overlap between users!
+- ✅ Hệ thống đăng nhập đầy đủ với quản lý phiên
+- ✅ Mỗi người dùng nhận gợi ý cá nhân hóa
+- ✅ Dựa trên lịch sử đánh giá + hành vi người dùng tương tự
+- ✅ Kết hợp độ tương đồng nội dung + lọc cộng tác
+- ✅ Phương pháp hybrid thực sự - xác nhận 0% trùng lặp giữa người dùng!
 
 ---
 
-## 🧪 How to Verify Personalization
+## 🧪 Cách Kiểm Tra Cá Nhân Hóa
 
-### Cách 1: Test thủ công trên Web
+### Cách 1: Kiểm tra thủ công trên Web
 
-1. Start server: `python app.py`
-2. Login với User 1 (username: `1`, password: `9999`)
-3. Click vào món "Bourbon Chicken" (item 1827)
-4. Ghi nhớ top 3 recommendations
-5. Logout → Login với User 2 (username: `2`)
-6. Click vào CÙNG món đó
-7. ✅ Top recommendations HOÀN TOÀN KHÁC!
+1. Khởi động server: `python app.py`
+2. Đăng nhập với Người dùng 1 (tên đăng nhập: `1`, mật khẩu: `9999`)
+3. Nhấp vào món "Bourbon Chicken" (món 1827)
+4. Ghi nhớ top 3 gợi ý
+5. Đăng xuất → Đăng nhập với Người dùng 2 (tên đăng nhập: `2`)
+6. Nhấp vào CÙNG món đó
+7. ✅ Các gợi ý hàng đầu HOÀN TOÀN KHÁC NHAU!
 
-### Cách 2: Chạy test script tự động
+### Cách 2: Chạy script kiểm tra tự động
 
 ```bash
 python food_recomendation_system\tools\test_personalization.py
@@ -325,158 +325,158 @@ python food_recomendation_system\tools\test_personalization.py
 
 Script sẽ:
 
-- Test 3 users khác nhau (1, 2, 3)
-- Show top 10 recommendations cho mỗi user
-- Tính Jaccard similarity giữa recommendation lists
-- Verify recommendations được personalized (expect 0% overlap)
+- Kiểm tra 3 người dùng khác nhau (1, 2, 3)
+- Hiển thị top 10 gợi ý cho mỗi người dùng
+- Tính độ tương đồng Jaccard giữa các danh sách gợi ý
+- Xác minh gợi ý được cá nhân hóa (mong đợi 0% trùng lặp)
 
 ---
 
-## 📝 Ghi chú Implementation
+## 📝 Ghi Chú Triển Khai
 
-### Data Flow:
+### Quy Trình Dữ Liệu:
 
-1. **Startup**: Load CSV → Build user-item matrix → Fit TF-IDF model
-2. **Login**: User authenticates → Store user_id in session
-3. **View Item**:
-   - Get current user from session
-   - Compute CB scores (TF-IDF similarity to query item)
-   - Compute CF scores (user-based predictions for current user)
-   - Normalize both scores
-   - Combine with weighted average
-   - Return top-k personalized items
+1. **Khởi động**: Tải CSV → Xây dựng ma trận người-món → Huấn luyện mô hình TF-IDF
+2. **Đăng nhập**: Người dùng xác thực → Lưu user_id vào phiên
+3. **Xem Món**:
+   - Lấy người dùng hiện tại từ phiên
+   - Tính điểm CB (độ tương đồng TF-IDF với món truy vấn)
+   - Tính điểm CF (dự đoán dựa trên người dùng cho người dùng hiện tại)
+   - Chuẩn hóa cả hai điểm
+   - Kết hợp với trung bình có trọng số
+   - Trả về top-k món cá nhân hóa
 
-### Key Design Decisions:
+### Các Quyết Định Thiết Kế Chính:
 
-- **User-based CF** (not item-based) for better personalization
-- **On-the-fly computation** of user similarity (no pre-caching)
-- **Min-max normalization** to make CB and CF scores comparable
-- **Deduplicate by title** to avoid showing same dish multiple times
-- **Session-based auth** (no database needed for this demo)
+- **Lọc cộng tác dựa trên người dùng** (không dựa trên món) cho cá nhân hóa tốt hơn
+- **Tính toán theo thời gian thực** độ tương đồng người dùng (không lưu cache trước)
+- **Chuẩn hóa min-max** để điểm CB và CF có thể so sánh được
+- **Loại trùng lặp theo tiêu đề** để tránh hiển thị cùng món nhiều lần
+- **Xác thực dựa trên phiên** (không cần cơ sở dữ liệu cho demo này)
 
-### Performance Considerations:
+### Cân Nhắc Hiệu Suất:
 
-- User similarity matrix computed per request (~2ms for 2323 users)
-- TF-IDF embeddings pre-computed at startup
-- Item similarity pre-computed for fallback
-- Scalable to ~10k users without caching
+- Ma trận độ tương đồng người dùng được tính mỗi yêu cầu (~2ms cho 2323 người dùng)
+- Embeddings TF-IDF được tính trước khi khởi động
+- Độ tương đồng món được tính trước cho phương án dự phòng
+- Mở rộng đến ~10k người dùng mà không cần caching
 
 ---
 
-## 🛠️ Khắc phục sự cố
+## 🛠️ Khắc Phục Sự Cố
 
-### App không khởi động:
+### Ứng dụng không khởi động:
 
-- Kiểm tra đang chạy từ project root: `python app.py`
-- Verify dependencies đã cài: `pip list | findstr flask`
-- Kiểm tra dataset tồn tại: `Test-Path "data\Dataset_for_print.csv"`
+- Kiểm tra đang chạy từ thư mục gốc dự án: `python app.py`
+- Xác nhận thư viện đã cài: `pip list | findstr flask`
+- Kiểm tra tập dữ liệu tồn tại: `Test-Path "data\Dataset_for_print.csv"`
 
 ### Ảnh không hiển thị:
 
 - URL trong `link_image_food` có thể không hợp lệ
-- Browser block external images (kiểm tra console)
-- Network issues với food.com servers
+- Trình duyệt chặn ảnh bên ngoài (kiểm tra console)
+- Vấn đề mạng với máy chủ food.com
 
-### Login không hoạt động:
+### Đăng nhập không hoạt động:
 
-- Username phải là số nguyên (User ID từ dataset)
-- Password phải là `9999`
-- Thử với user IDs: 1, 2, 3, 416, 1470
+- Tên đăng nhập phải là số nguyên (ID người dùng từ tập dữ liệu)
+- Mật khẩu phải là `9999`
+- Thử với các ID người dùng: 1, 2, 3, 416, 1470
 
-### Recommendations giống nhau cho mọi users:
+### Gợi ý giống nhau cho mọi người dùng:
 
-- Kiểm tra session có lưu user_id: print `session.get('user_id')`
-- Verify CF được enable: check `_user_item_mat is not None`
-- Run test script để confirm
+- Kiểm tra phiên có lưu user_id: in `session.get('user_id')`
+- Xác minh CF được bật: kiểm tra `_user_item_mat is not None`
+- Chạy script kiểm tra để xác nhận
 
 ---
 
-## ⚡ Performance Optimizations Implemented
+## ⚡ Các Tối Ưu Hóa Hiệu Suất Đã Triển Khai
 
-### 🚀 Speed & Efficiency:
-- ✅ **User Similarity Caching**: Pre-compute và cache matrix (2323×2323, ~41MB) at startup
-  - CF computation: 100ms → <1ms (**99% faster**)
-- ✅ **Dynamic Candidate Pool**: Intelligent sizing (CB: 100, CF: 200, Pop: 50)
-- ✅ **Optimized Search**: Search title + description with relevance ranking
+### 🚀 Tốc Độ & Hiệu Quả:
+- ✅ **Lưu Cache Độ Tương Đồng Người Dùng**: Tính trước và lưu cache ma trận (2323×2323, ~41MB) khi khởi động
+  - Tính toán CF: 100ms → <1ms (**nhanh hơn 99%**)
+- ✅ **Pool Ứng Viên Động**: Định cỡ thông minh (CB: 100, CF: 200, Pop: 50)
+- ✅ **Tìm Kiếm Tối Ưu**: Tìm tiêu đề + mô tả với xếp hạng độ liên quan
 
-### 🎯 Quality Improvements:
-- ✅ **Adaptive Alpha Strategy**: Auto-adjust based on user experience
-  - New users (<5 ratings): α=0.7 (70% content-based)
-  - Medium users (5-19): α=0.5 (balanced)
-  - Power users (20+): α=0.3 (70% collaborative)
-- ✅ **Diversity Re-ranking**: Category penalty prevents monotonous results
-  - Category diversity: 1-2 → **7+ categories** in top 20
-- ✅ **Improved Hybrid**: 50-50 default + 10% popularity boost
+### 🎯 Cải Tiến Chất Lượng:
+- ✅ **Chiến Lược Alpha Thích Ứng**: Tự động điều chỉnh dựa trên kinh nghiệm người dùng
+  - Người dùng mới (<5 đánh giá): α=0.7 (70% dựa trên nội dung)
+  - Người dùng trung bình (5-19): α=0.5 (cân bằng)
+  - Người dùng năng lực (20+): α=0.3 (70% cộng tác)
+- ✅ **Xếp Hạng Lại Đa Dạng**: Phạt danh mục ngăn kết quả đơn điệu
+  - Đa dạng danh mục: 1-2 → **7+ danh mục** trong top 20
+- ✅ **Cải Tiến Hybrid**: Mặc định 50-50 + tăng cường độ phổ biến 10%
 
-### 📊 Verification Results:
-Run test: `python food_recomendation_system\tools\test_optimizations.py`
+### 📊 Kết Quả Xác Minh:
+Chạy kiểm tra: `python food_recomendation_system\tools\test_optimizations.py`
 
-**Metrics:**
-| Metric | Before | After | Gain |
+**Các Chỉ Số:**
+| Chỉ Số | Trước | Sau | Cải Thiện |
 |--------|--------|-------|------|
-| CF Speed | ~100ms | <1ms | **99%** |
-| Diversity | 1-2 cats | 7+ cats | **3.5x** |
-| Strategy | Fixed | Adaptive | **Smart** |
+| Tốc độ CF | ~100ms | <1ms | **99%** |
+| Đa dạng | 1-2 dm | 7+ dm | **3.5x** |
+| Chiến lược | Cố định | Thích ứng | **Thông minh** |
 
-### 🎨 UX Enhancements:
-- ✅ Strategy display on item page (shows personalization level)
-- ✅ Match score percentage (0-100%) for each recommendation
-- ✅ Category labels and ratings visible
-- ✅ Search result counter and highlighting
-
----
-
-## 🚀 Future Enhancements
-
-### Đã implement:
-
-- ✅ User authentication system
-- ✅ User-based collaborative filtering  
-- ✅ Hybrid recommendations (CB + CF)
-- ✅ Session management
-- ✅ Personalized predictions
-- ✅ Performance caching
-- ✅ Adaptive alpha strategy
-- ✅ Diversity re-ranking
-- ✅ Test verification scripts
-
-### Nice to Have:
-
-- Matrix factorization (SVD/ALS)
-- Matrix factorization for sparse data
-- Deep learning embeddings (neural CF)
-- Real-time rating updates
-- User registration & profile management
-- A/B testing framework
-- Recommendation explanation (why we recommend this?)
-- Diversity & serendipity metrics
+### 🎨 Cải Tiến Trải Nghiệm Người Dùng:
+- ✅ Hiển thị chiến lược trên trang món (hiển mức độ cá nhân hóa)
+- ✅ Phần trăm điểm khớp (0-100%) cho mỗi gợi ý
+- ✅ Nhãn danh mục và đánh giá hiển thị
+- ✅ Bộ đếm kết quả tìm kiếm và làm nổi bật
 
 ---
 
-## 🎓 Kết luận
+## 🚀 Các Cải Tiến Tương Lai
 
-Hệ thống này đã implement đầy đủ **Hybrid Recommendation System**:
+### Đã triển khai:
 
-1. ✅ **Content-Based**: Gợi ý based on item features (TF-IDF)
-2. ✅ **Collaborative Filtering**: Personalized based on user behavior (User-based)
-3. ✅ **Hybrid Combination**: Best of both worlds (weighted average)
-4. ✅ **User Authentication**: Track individual users (session-based)
-5. ✅ **Verified Working**: Test shows 0% overlap between users!
+- ✅ Hệ thống xác thực người dùng
+- ✅ Lọc cộng tác dựa trên người dùng  
+- ✅ Gợi ý hybrid (CB + CF)
+- ✅ Quản lý phiên
+- ✅ Dự đoán cá nhân hóa
+- ✅ Lưu cache hiệu suất
+- ✅ Chiến lược alpha thích ứng
+- ✅ Xếp hạng lại đa dạng
+- ✅ Các script kiểm tra xác minh
 
-**Kết quả:** Mỗi user nhận được recommendations THỰC SỰ cá nhân hóa, không giống nhau!
+### Tính năng nên có:
+
+- Phân tích ma trận (SVD/ALS)
+- Phân tích ma trận cho dữ liệu thưa
+- Embeddings học sâu (neural CF)
+- Cập nhật đánh giá thời gian thực
+- Đăng ký người dùng & quản lý hồ sơ
+- Khung kiểm tra A/B
+- Giải thích gợi ý (tại sao chúng tôi gợi ý điều này?)
+- Các chỉ số đa dạng & bất ngờ
 
 ---
 
-## 👨‍💻 Credits
+## 🎓 Kết Luận
 
-Food Recommendation System with Hybrid Filtering
+Hệ thống này đã triển khai đầy đủ **Hệ Thống Gợi Ý Hybrid**:
 
-- Content-Based Filtering (TF-IDF with cosine similarity)
-- User-Based Collaborative Filtering (k-NN with k=20)
-- Weighted Hybrid Approach (α=0.6)
-- User Authentication & Session Management
-- Flask Web Application
+1. ✅ **Dựa Trên Nội Dung**: Gợi ý dựa trên đặc trưng món (TF-IDF)
+2. ✅ **Lọc Cộng Tác**: Cá nhân hóa dựa trên hành vi người dùng (Dựa trên người dùng)
+3. ✅ **Kết Hợp Hybrid**: Lấy điểm mạnh của cả hai (trung bình có trọng số)
+4. ✅ **Xác Thực Người Dùng**: Theo dõi từng người dùng (dựa trên phiên)
+5. ✅ **Xác Minh Hoạt Động**: Kiểm tra cho thấy 0% trùng lặp giữa người dùng!
 
-**Dataset**: food.com recipes with user ratings (2323 users × 2838 items)
+**Kết quả:** Mỗi người dùng nhận được gợi ý THỰC SỰ cá nhân hóa, không giống nhau!
 
-🚀 Ready for production testing and further improvements!
+---
+
+## 👨‍💻 Thông Tin
+
+Hệ Thống Gợi Ý Món Ăn với Lọc Hybrid
+
+- Lọc Dựa Trên Nội Dung (TF-IDF với độ tương đồng cosine)
+- Lọc Cộng Tác Dựa Trên Người Dùng (k-NN với k=20)
+- Phương Pháp Hybrid Có Trọng Số (α=0.6)
+- Xác Thực Người Dùng & Quản Lý Phiên
+- Ứng Dụng Web Flask
+
+**Tập Dữ Liệu**: Công thức nấu ăn food.com với đánh giá người dùng (2323 người dùng × 2838 món)
+
+🚀 Sẵn sàng cho kiểm tra sản phẩm và các cải tiến tiếp theo!
