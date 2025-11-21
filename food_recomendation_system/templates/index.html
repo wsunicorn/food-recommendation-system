@@ -19,12 +19,25 @@
 
         <main class="maincol">
             <header class="topbar">
-                <h1>Food Recommendations</h1>
-                <form class="search" method="get" action="/search">
-                    <input type="text" name="q" placeholder="Search title...">
-                    <button type="submit">Search</button>
-                </form>
+                <h1>🍽️ Food Recommendations</h1>
+                <div class="topbar-controls">
+                    <form class="search" method="get" action="/search">
+                        <input type="text" name="q" placeholder="🔍 Search for delicious food...">
+                        <button type="submit">Search</button>
+                    </form>
+                    <div class="user-info">
+                        <span>👤 {{ current_user }}</span>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </div>
             </header>
+
+            {% if search_query %}
+            <div style="padding: 20px 30px; background: #e8f4f8; border-left: 4px solid #3498db; margin-bottom: 20px;">
+                <h3 style="margin: 0 0 10px 0; color: #2c3e50;">🔍 Search Results for "{{ search_query }}"</h3>
+                <p style="margin: 0; color: #555;">Found {{ search_results_count }} matching items</p>
+            </div>
+            {% endif %}
 
             <div class="controls">
                 <form method="get" action="/">

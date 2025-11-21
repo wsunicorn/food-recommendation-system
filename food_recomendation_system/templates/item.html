@@ -7,30 +7,63 @@
 </head>
 <body>
 <div class="container">
-    <a href="/">← Back</a>
+    <div class="back-nav">
+        <a href="/">← Back to Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
     <div class="item-detail">
         <div class="image-wrap">
             <img src="{{ item.link_image_food }}" alt="{{ item.title }}">
         </div>
         <div class="meta">
             <h1>{{ item.title }}</h1>
-            <p>{{ item.description }}</p>
-            <p><strong>Rating:</strong> {{ item.rating }}</p>
-            <p><a href="{{ item.link_food }}" target="_blank">Recipe link</a></p>
+            {% if item.category %}
+            <div style="margin-bottom: 15px;">
+                <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">🍽️ {{ item.category }}</span>
+            </div>
+            {% endif %}
+            <p style="line-height: 1.8; margin-bottom: 20px;">{{ item.description }}</p>
+            {% if item.rating %}
+            <p style="font-size: 1.1rem; margin-bottom: 15px;"><strong>⭐ Rating:</strong> <span style="color: #f39c12; font-weight: 600;">{{ item.rating }}</span></p>
+            {% endif %}
+            <p><a href="{{ item.link_food }}" target="_blank" style="display: inline-block; padding: 12px 24px; background: #27ae60; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">View Full Recipe →</a></p>
         </div>
     </div>
 
-    <h2>Recommended similar items</h2>
-    <div class="grid">
+    <div style="padding: 30px; background: white; margin: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
+            <div>
+                <h2 style="margin: 0 0 10px 0; color: #2c3e50; font-size: 1.8rem;">🎯 You May Also Like</h2>
+                <p style="margin: 0; color: #7f8c8d; font-size: 1rem;">Personalized recommendations based on your taste and similar dishes</p>
+            </div>
+        </div>
+    <div class="grid" style="padding: 0;">
         {% for r in recs %}
-        <div class="card">
-            <a href="/item/{{ r.item_id }}">
-                <img src="{{ r.image }}" alt="{{ r.title }}">
-                <h4>{{ r.title }}</h4>
-                <small>score: {{ "%.3f"|format(r.score) }}</small>
+        <div class="card" style="position: relative;">
+            <a href="/item/{{ r.item_id }}" style="display: block; height: 100%;">
+                <div class="imgwrap" style="position: relative;">
+                    <img src="{{ r.image }}" alt="{{ r.title }}">
+                    {% if r.category %}
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                        {{ r.category }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div style="padding: 14px;">
+                    <h4 style="margin: 0 0 8px 0; font-size: 1rem; line-height: 1.4; min-height: 44px; color: #2c3e50;">{{ r.title }}</h4>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid #ecf0f1;">
+                        {% if r.rating %}
+                        <span style="color: #f39c12; font-weight: 600; font-size: 0.85rem;">⭐ {{ r.rating }}</span>
+                        {% else %}
+                        <span style="color: #95a5a6; font-size: 0.85rem;">No rating</span>
+                        {% endif %}
+                        <span style="color: #3498db; font-weight: 600; font-size: 0.85rem;">View →</span>
+                    </div>
+                </div>
             </a>
         </div>
         {% endfor %}
+    </div>
     </div>
 </div>
 </body>
