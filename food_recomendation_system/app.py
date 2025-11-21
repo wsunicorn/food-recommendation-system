@@ -120,6 +120,69 @@ def dedupe_items(items):
     return out
 
 
+def get_personalized_recommendations_for_user(user_id, top_k=12):
+    """Get personalized recommendations for a user based on their rating history using CF.
+    
+    Returns:
+        List of (itemID, row, predicted_score) tuples
+    """
+    ensure_loaded()
+    
+    if _user_item_mat is None or _user_sim_cache is None:
+        return []
+    
+    # Find user index in matrix
+    if user_id not in _user_to_index:
+        # New user with no history - return popular items instead
+        if _popular_list:
+            result = []
+            for item_id in _popular_list[:top_k]:
+                if item_id in _items_df.index:
+                    result.append((item_id, _items_df.loc[item_id], 0.0))
+            return result
+        return []
+    
+    user_idx = _user_to_index[user_id]
+    
+    # Get user's already rated items
+    user_ratings = _user_item_mat[user_idx]
+    rated_items = set(np.where(user_ratings > 0)[0])
+    
+    # Predict ratings for all unrated items using collaborative filtering
+    all_predictions = predict_user_based(_user_item_mat, user_idx, _user_sim_cache, k=30)
+    
+    # Collect candidates (items not yet rated by user)
+    candidates = []
+    for item_idx, pred_score in enumerate(all_predictions):
+        if item_idx in rated_items:  # Skip already rated
+            continue
+        if pred_score <= 0:  # Skip zero/negative predictions
+            continue
+        
+        # Map item_idx back to itemID
+        if item_idx < len(_pos_to_itemid):
+            item_id = _pos_to_itemid[item_idx]
+            if item_id in _items_df.index:
+                candidates.append((item_id, _items_df.loc[item_id], pred_score))
+    
+    # Sort by predicted score descending
+    candidates.sort(key=lambda x: -x[2])
+    
+    # Deduplicate by title
+    seen_titles = set()
+    result = []
+    for item_id, row, score in candidates:
+        title = str(row.get('title', '')).strip().lower()
+        if not title or title in seen_titles:
+            continue
+        seen_titles.add(title)
+        result.append((item_id, row, score))
+        if len(result) >= top_k:
+            break
+    
+    return result
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     ensure_loaded()
@@ -246,7 +309,15 @@ def index():
     }
 
     current_user = session.get('username', 'Guest')
-    return render_template('index.html', items=page_items, categories=[c for c,_ in categories_counts], categories_counts=categories_counts, selected_category=selected_category, sort=sort, diversify=diversify, pagination=pagination, total_all=total_all, current_user=current_user)
+    
+    # Get personalized recommendations for logged-in user
+    personalized_items = []
+    if 'user_id' in session:
+        user_id = session['user_id']
+        personalized_recs = get_personalized_recommendations_for_user(user_id, top_k=12)
+        personalized_items = [(item_id, row) for item_id, row, score in personalized_recs]
+    
+    return render_template('index.html', items=page_items, categories=[c for c,_ in categories_counts], categories_counts=categories_counts, selected_category=selected_category, sort=sort, diversify=diversify, pagination=pagination, total_all=total_all, current_user=current_user, personalized_items=personalized_items)
 
 
 @app.route('/category/<path:category_name>')

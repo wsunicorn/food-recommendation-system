@@ -39,6 +39,57 @@
             </div>
             {% endif %}
 
+            {% if personalized_items and personalized_items|length > 0 %}
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; margin: 0 0 30px 0; border-radius: 16px; box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="color: white; margin: 0 0 8px 0; font-size: 1.8rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">✨ Dành Riêng Cho Bạn</h2>
+                        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 1rem;">Những món ăn được gợi ý dựa trên sở thích của bạn</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 25px; backdrop-filter: blur(10px);">
+                        <span style="color: white; font-weight: 600; font-size: 0.9rem;">🤖 Collaborative Filtering</span>
+                    </div>
+                </div>
+                
+                <div class="grid" style="padding: 0;">
+                    {% for idx, row in personalized_items[:12] %}
+                    <div class="card" style="background: white; transform: translateY(0); transition: all 0.3s;">
+                        <a href="/item/{{ idx }}" style="display: block; height: 100%;">
+                            <div class="imgwrap" style="position: relative;">
+                                <img src="{{ row.link_image_food }}" alt="{{ row.title }}">
+                                <div style="position: absolute; top: 10px; left: 10px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                                    💝 FOR YOU
+                                </div>
+                                {% if row.category %}
+                                <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                                    {{ row.category }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div style="padding: 14px;">
+                                <h4 style="margin: 0 0 8px 0; font-size: 1rem; line-height: 1.4; min-height: 44px; color: #2c3e50;">{{ row.title }}</h4>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid #ecf0f1;">
+                                    {% if row.rating %}
+                                    <span style="color: #f39c12; font-weight: 600; font-size: 0.85rem;">⭐ {{ row.rating }}</span>
+                                    {% else %}
+                                    <span style="color: #95a5a6; font-size: 0.85rem;">No rating</span>
+                                    {% endif %}
+                                    <span style="color: #667eea; font-weight: 600; font-size: 0.85rem;">Xem →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 0;">
+                        <strong>{{ personalized_items|length }}</strong> món ăn được chọn đặc biệt cho bạn dựa trên lịch sử đánh giá
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+
             <div class="controls">
                 <form method="get" action="/">
                     <label>Category:
